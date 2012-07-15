@@ -3,6 +3,7 @@
  *
  * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
  * @see https://github.com/federico-lox/fork.js
+ * @see http://jsfiddle.net/federico_lox/r2ey7/
  */
 (function(context){
 	//help minification
