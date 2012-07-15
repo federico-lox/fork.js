@@ -1,0 +1,15 @@
+*.class
+*.komodoproject
+*.merge-left*
+*.merge-right*
+*.mine
+*.prej
+*.pyc
+*.pyo
+*.working
+.DS_Store
+.project
+.settings
+.svn
+_svn
+svn-commit*.tmp
