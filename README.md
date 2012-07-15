@@ -2,6 +2,8 @@ fork.js
 =======
 A cross-platform callback processor for non-blocking JavaScript
 
+More information (and docs) coming soon.
+
 Credits
 -------
 *	[Federico "Lox" Lucignano](https://plus.google.com/117046182016070432246 "Google profile"), creator and mantainer
