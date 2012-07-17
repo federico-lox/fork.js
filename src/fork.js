@@ -1,23 +1,31 @@
 /**
  * A cross-platform callback processor for non-blocking JavaScript
  *
- * @author Federico "Lox" Lucignano <https://plus.google.com/117046182016070432246>
+ * @author Federico "Lox" Lucignano
+ * <https://plus.google.com/117046182016070432246>
+ *
  * @see https://github.com/federico-lox/fork.js
  * @see http://jsfiddle.net/federico_lox/r2ey7/
  */
-(function(context){
+
+/*global define, module*/
+(function (context) {
+	'use strict';
+
 	//help minification
 	var undefType = 'undefined';
 
-	function init(){
-		if(context.postMessage){
+	function init() {
+		var ret;
+
+		if (context.postMessage) {
 			//browsers with cross-origin communication support
-			return function(func){
+			ret = function (func) {
 				var pid = Math.random().toString(),
 					proc;
 
-				proc = function(e){
-					if(e.data === pid){
+				proc = function (e) {
+					if (e.data === pid) {
 						func();
 						context.removeEventListener('message', proc, true);
 					}
@@ -26,32 +34,35 @@
 				context.addEventListener('message', proc, true);
 				context.postMessage(pid, '*');
 			};
-		}else if(typeof process !== undefType){
+		} else if (typeof process !== undefType) {
 			//Node
-			return function(func){
+			ret = function (func) {
 				process.nextTick(func);
 			};
-		}else if(typeof setTimeout !== undefType){
-			//older browsers and exotic plarforms, e.g. Applcelerator Titanium Mobile
-			return function(func){
+		} else if (typeof setTimeout !== undefType) {
+			//older browsers and exotic plarforms,
+			//e.g. Applcelerator Titanium Mobile
+			ret = function (func) {
 				setTimeout(func, 0);
 			};
-		}else{
+		} else {
 			//Sad JS environment is sad :(
-			return function(func){
+			ret = function (func) {
 				func();
 			};
 		}
+
+		return ret;
 	}
 
 	//UMD
-	if(typeof define === 'function' && define.amd){
+	if (typeof define === 'function' && define.amd) {
 		//AMD module
 		define('fork', init);
-	}else if(typeof module === 'object' && module.exports){
+	} else if (typeof module === 'object' && module.exports) {
 		//CommonJS module
 		module.exports = init();
-	}else{
+	} else {
 		//traditional namespace
 		context.fork = init();
 	}
